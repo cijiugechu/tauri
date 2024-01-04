@@ -15,4 +15,8 @@ fn main() {
   let mobile = target_os == "ios" || target_os == "android";
   alias("desktop", !mobile);
   alias("mobile", mobile);
+
+  if cfg!(feature = "clipboard") && option_env!("WAYLAND_DISPLAY").is_some() {
+    println!("cargo:rustc-cfg=feature=\"clipboard-wayland-data-control\"");
+  }
 }
